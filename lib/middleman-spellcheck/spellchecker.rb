@@ -48,6 +48,7 @@ class Spellchecker
     IO.popen(cmd, "a+", :err=>[:child, :out]) { |f|
       val = f.gets.strip()	# skip the Aspell's intro
       sdbg "Expected Aspell intro, got #{val}"
+      raise "Aspell error: #{val}" if val =~ /[Ee]rror/
       words.each do |word|
         sdbg "-> Writing word '#{word}'"
         f.write(word + "\n")
